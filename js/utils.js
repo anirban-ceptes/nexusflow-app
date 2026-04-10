@@ -1,17 +1,17 @@
 /**
- * ============================================================
+ * =====================================================================
  *  utils.js — NexusFlow Shared Utilities
- * ============================================================
+ * =====================================================================
  *  Common helper functions used across multiple pages.
  *  Imported via <script src="js/utils.js"></script>
- * ============================================================
+ * =====================================================================
  */
 
 var NexusUtils = (function () {
 
   /**
    * formatCurrency(amount)
-   * ───────────────────────
+   * ─────────────────────────────────────────────────────────────────
    * Formats a number as a USD currency string.
    *
    * Expected usage:
@@ -37,7 +37,7 @@ var NexusUtils = (function () {
 
   /**
    * searchFilter(query, items, key)
-   * ────────────────────────────────
+   * ─────────────────────────────────────────────────────────────────
    * Filters an array of objects by matching a regex against
    * a specified key.
    *
@@ -54,8 +54,9 @@ var NexusUtils = (function () {
       return items;
     }
 
-    // BUG: Unsanitized user input goes directly into RegExp
-    var pattern = new RegExp(query, "i");
+    // Escape special characters to prevent RegExp syntax errors
+    var safeQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    var pattern = new RegExp(safeQuery, "i");
 
     return items.filter(function (item) {
       return pattern.test(item[key]);
@@ -65,7 +66,7 @@ var NexusUtils = (function () {
 
   /**
    * generateId(prefix)
-   * ───────────────────
+   * ─────────────────────────────────────────────────────────────────
    * Generates a simple unique ID string.
    * This function is clean — no bugs here.
    */
@@ -77,7 +78,7 @@ var NexusUtils = (function () {
 
   /**
    * formatDate(dateStr)
-   * ────────────────────
+   * ─────────────────────────────────────────────────────────────────
    * Formats a date string into a readable format.
    * This function is clean — no bugs here.
    */
@@ -89,7 +90,8 @@ var NexusUtils = (function () {
   }
 
 
-  // ── Public API ──────────────────────────────────
+  // ─────────────────────────────────────────────────────────────────
+  // Public API ──────────────────────────────────────────────────────
   return {
     formatCurrency: formatCurrency,
     searchFilter:   searchFilter,
